@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <title>Teca Crit Calculator</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header clearfix">         
+            <h3>Tera Crit Calculator</h3>
+        </header>
+        <hr class="my-4">        
+    </div>  
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-sm-5">
+                <form action="add_skill_process" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Name:</label>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="name" >
+                    </div>
+                    <div class="form-group row">                                             
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Class:</label>
+                        <select class="form-control form-control-sm col-md-6" name="class">
+                            <option value="1">Warrior</option>
+                            <option value="2">Lancer</option>
+                            <option value="3">Slayer</option>
+                            <option value="4">Beserker</option>
+                            <option value="5">Sorcerer</option>
+                            <option value="6">Archer</option>
+                            <option value="7">Priest (lmao)</option>
+                            <option value="8">Mystic (cute)</option>
+                            <option value="9">Reaper</option>
+                            <option value="10">Gunner</option>
+                            <option value="11">Brawler</option>
+                            <option value="12">Ninja</option>
+                            <option value="13">Valkyrie</option>
+                        </select>             
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Glyph Value (G):</label>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="g" value="1">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Innate CF Multiplier (I):</label>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="i" value="1">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Bonus Base CF (B)</label>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="b" value="1">
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-5 col-form-label-sm">Additional CC (A):</label>
+                        <input type="text" class="form-control form-control-sm col-md-6" name="a" value="0">
+                    </div>                                                                                                                                                                                                         
+                <button type="submit" class="btn btn-primary">Submit</button>               
+                </form> 
+            </div>
+        </div> 
+        <a href="/">Go back</a> 
+    </div>    
+
+
+          
+
+    <!-- <div class="container mt-5">
+        <div class="row mt-2">
+            <div class="col border border-dark">
+                <img src="https://i.imgur.com/nUkRLs4.png" class ="img-fluid">
+            </div>
+            <div class="col border border-dark">
+                <img src="https://i.imgur.com/Jy36pCh.png" class ="img-fluid">
+            </div>            
+        </div>
+        <div class="row mt-2">
+            <div class="col border border-dark">
+                <img src="https://i.imgur.com/2z3I1Qe.png" class ="img-fluid">
+            </div>
+            <div class="col border border-dark">
+                <img src="https://i.imgur.com/ZW9LiBv.png" class ="img-fluid">
+            </div>  
+            <div class="col border border-dark">
+                <img src="https://i.imgur.com/FkceyKh.png" class ="img-fluid">
+            </div>                        
+        </div>        
+    </div> -->
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% if skills.0.of_class.id == 1 %}
+<div class="form-group">
+    <div class="form-check ">
+        <input class="data ml-5 form-check-input" type="radio" name="w_stance" id="inlineRadio1" value="1">
+        <label class="ml-5 form-check-label">A Stance</label>
+    </div>
+    <div class="form-check">
+        <input class="data ml-5 form-check-input" type="radio" name="w_stance" id="inlineRadio2" value="2">
+        <label class="ml-5 form-check-label">D Stance</label>
+    </div>
+</div>
+{% endif %}
+
+<div class="form-group row">
+    <label class="col-form-label col-sm-4 col-form-label-sm">Skill:</label>
+    <select class="data form-control form-control-sm col-md-6" name="skill" id="skill_generated">
+        <option value="70" selected disabled hidden>Default - No modifier </option>    
+        {% for skill in skills %}
+        {{ skill.of_class.id|stringformat:"s" }}
+        <option value="{{skill.id}}">{{skill.name}}</option>
+        {% endfor %}
+    </select> 
+</div>
