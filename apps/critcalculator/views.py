@@ -62,24 +62,24 @@ def calculate_process(request):
         else:      
             CC = n + G*(A+n)*(1-n)
 
-        # print "================ ", user_class.name  
-        # print "aura = ", aura         
-        # print "food = ", food   
-        # print "A = ", A 
-        # print "B = ", B
-        # print "D = ", D
-        # print "G = ", G        
-        # print "I = ", I
-        # print "boss name = ", boss.name        
-        # print "L = ", L
-        # print "T = ", T
-        # print "CR = ", CR
-        # print "Cfo = ", Cfo
-        # print "Cf = ", Cf
-        # print "total crit = ", total_crit
-        # print "F = ", F
-        # print "n = ", n  
-        # print "CC = ", CC
+        print "================ ", user_class.name  
+        print "aura = ", aura         
+        print "food = ", food   
+        print "A = ", A 
+        print "B = ", B
+        print "D = ", D
+        print "G = ", G        
+        print "I = ", I
+        print "boss name = ", boss.name        
+        print "L = ", L
+        print "T = ", T
+        print "CR = ", CR
+        print "Cfo = ", Cfo
+        print "Cf = ", Cf
+        print "total crit = ", total_crit
+        print "F = ", F
+        print "n = ", n  
+        print "CC = ", CC
                  
     return HttpResponse(math.floor((CC)*100))
 
