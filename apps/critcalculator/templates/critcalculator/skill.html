@@ -1,13 +1,21 @@
-{% if skills.0.of_class.id == 1 %}
+{% if class|stringformat:"s" == "1" %}
 <div class="form-group">
     <div class="form-check ">
-        <input class="data ml-5 form-check-input" type="radio" name="w_stance" id="inlineRadio1" value="1">
+        <input class="data ml-5 form-check-input" type="radio" name="w_stance" value="1">
         <label class="ml-5 form-check-label">A Stance</label>
     </div>
     <div class="form-check">
-        <input class="data ml-5 form-check-input" type="radio" name="w_stance" id="inlineRadio2" value="2">
+        <input class="data ml-5 form-check-input" type="radio" name="w_stance" value="2">
         <label class="ml-5 form-check-label">D Stance</label>
     </div>
+</div>
+{% endif %}
+{% if class|stringformat:"s" == "6" %}
+<div class="form-group">
+    <div class="form-check">
+        <input class="data ml-5 form-check-input" type="checkbox" value="1" name="crackshot">
+        <label class="ml-5 form-check-label">Crackshot</label>
+    </div>  
 </div>
 {% endif %}
 
@@ -16,8 +24,20 @@
     <select class="data form-control form-control-sm col-md-6" name="skill" id="skill_generated">
         <option value="70" selected disabled hidden>Default - No modifier </option>    
         {% for skill in skills %}
-        {{ skill.of_class.id|stringformat:"s" }}
         <option value="{{skill.id}}">{{skill.name}}</option>
         {% endfor %}
     </select> 
+</div>
+                    
+<div class="form-group row">
+    <label class="col-form-label col-sm-4 col-form-label-sm">+Crit Factor:</label>
+    <input type="text" class="data form-control form-control-sm col-md-6" name="bonus_cf" value="250">
+</div>
+<div class="form-check">
+    <input class="data ml-4 form-check-input" type="checkbox" value="20" name="food">
+    <label class="data ml-4 form-check-label">Bulgogi + 20</label>
+</div>  
+<div class="form-check">
+    <input class="data ml-4 form-check-input" type="checkbox" value="1.2" name="aura">
+    <label class="ml-4 form-check-label">Mystic Aura + {{ mystic_crit }}</label>
 </div>

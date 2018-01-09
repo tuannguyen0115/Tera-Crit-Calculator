@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <header class="header clearfix">         
-            <h3>Tera Crit Calculator</h3>
+            <h3>Crit Calculator</h3>
         </header>
         <hr class="my-4">        
     </div>  
@@ -23,21 +23,30 @@
             <div class="col-sm-5">
                 <form id="ajax-form" action="calculate_process" method="POST">
                     {% csrf_token %}
-                    <div class="form-group row">
-                        <label class="col-form-label col-sm-4 col-form-label-sm">Race:</label>
-                        <select class="data form-control form-control-sm col-md-6" name="race" id="race">
-                            <option value="0">Other races</option>
-                            <option value="0.01">Castanic</option>
-                        </select>
-                    </div>
+                    <div class="form-group row">                                         
+                        <label class="col-form-label col-sm-4 col-form-label-sm">Bosses/Dungeon:</label>
+                        <select class="data form-control form-control-sm col-md-6" name="boss" value="1">
+                            {% for boss in bosses %}
+                            <option value="{{boss.id}}">{{boss.name}}</option>
+                            {% endfor %}
+                        </select>                        
+                    </div>        
                     <div class="form-group row">
                         <label class="col-form-label col-sm-4 col-form-label-sm">Hit Direction:</label>
-                        <select class="data form-control form-control-sm col-md-6" name="direction">
+                        <select class="data form-control form-control-sm col-md-6" name="direction" value="1">
                             <option value="1.6">Back</option>
                             <option value="1.2">Side</option>
                             <option value="1">Front</option>
                         </select>  
-                    </div> 
+                    </div>                                                     
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-4 col-form-label-sm">Race:</label>
+                        <select class="data form-control form-control-sm col-md-6" name="race" id="race">
+                            <option value="0" selected>Other races</option>
+                            <option value="0.01">Castanic</option>
+                        </select>
+                    </div>
+
                     <div class="form-group row">                                             
                         <label class="col-form-label col-sm-4 col-form-label-sm">Class:</label>
                         <select class="data form-control form-control-sm col-md-6" id= "class-id" name="class" onchange="get_class_skills();">
@@ -46,27 +55,7 @@
                             {% endfor %}
                         </select>             
                     </div>
-                    <div id="class-skil-generator"></div>
-                    <div class="form-group row">                                         
-                        <label class="col-form-label col-sm-4 col-form-label-sm">Bosses/Dungeon:</label>
-                        <select class="data form-control form-control-sm col-md-6" name="boss">
-                            {% for boss in bosses %}
-                            <option value="{{boss.id}}">{{boss.name}}</option>
-                            {% endfor %}
-                        </select>                        
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-sm-4 col-form-label-sm">+Crit Factor:</label>
-                        <input type="text" class="data form-control form-control-sm col-md-6" name="bonus_cf" value="250">
-                    </div>
-                    <div class="form-check">
-                        <input class="ml-4 form-check-input data" type="checkbox" value="1.2" name="aura">
-                        <label class="ml-4 form-check-label">Mystic Aura</label>
-                    </div>
-                    <div class="form-check">
-                            <input class="ml-4 form-check-input data" type="checkbox" value="20" name="food">
-                            <label class="ml-4 form-check-label">Bulgogi</label>
-                        </div>                    
+                    <div id="class-skil-generator"></div>                  
                     <div class="form-group row">                                         
                         <label class="col-form-label col-sm-4 col-form-label-sm">Carving Crystal:</label>
                         <select class="data form-control form-control-sm col-md-6" name="crystal">
@@ -85,9 +74,92 @@
                 </div>                             
             </div>
         </div>   
-    </div>                  
+    </div>  
 
-    <div class="container mt-5">
+    <div class="container mt-6">
+        <hr class="my-4">
+        <header class="header clearfix">         
+            <h3>Power - Crit Damage Calculator</h3>
+            <p>Testing Concept: <br>
+               Assuming with x amount of hit (1000 hits), we calculate the current damage with current total power and crit rate, then divide it by testing damage. <br>
+               Damage = (Number of hit * Crit Rate * Damage when Crit) + (Number of hit * Non Crit Rate * Damage when non crit)  </p>
+            </p>            
+            <p>For example: <br>
+               With Slayer's Measure Slice: <br>
+               At +200 crit factor, crit rate is 90%. Assuming total power is 300. <br>
+               Using standard ratio 1power:2crit <br>
+               At +230 crit factor, crit rate is 97%, Total power is 285. <br>
+               => With standard crit multiplier (focus, savage, bitter, slaying), the damage change is +2.9%
+               <br>
+               <br>
+               With Beserker's Thunder Strike: <br>
+               At +450 crit factor, crit rate is 91%. Assuming total power is 300. <br>
+               Using standard ratio 1power:2crit <br>
+               At +500 crit factor, crit rate is 96%, Total power is 275. <br>
+               => With standard crit multiplier (focus, savage, bitter, slaying), the damage change is -1.67%
+               
+
+            </p>
+        </header>
+        <hr class="my-4">        
+    </div> 
+    <div class="container">
+            <div class="row justify-content-around">
+                <div class="col-sm-5">
+                    <form id="ajax-form-damage" action="calculate_damage_process" method="POST">
+                        {% csrf_token %}
+                        <h5>Current Stats:</h5>                     
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4 col-form-label-sm">Current Power :</label>
+                            <input type="text" class="data-damage form-control form-control-sm col-md-6" name="current_power" value="0">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4 col-form-label-sm">Current CritRate (<1):</label>
+                            <input type="text" class="data-damage form-control form-control-sm col-md-6" name="current_crit" value="0">
+                        </div>    
+                        <h5>Testing Stats:</h5>                     
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4 col-form-label-sm">Test Power :</label>
+                            <input type="text" class="data-damage form-control form-control-sm col-md-6" name="next_power" value="0">
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-sm-4 col-form-label-sm">Test CritRate (<1):</label>
+                            <input type="text" class="data-damage form-control form-control-sm col-md-6" name="next_crit" value="0">
+                        </div> 
+                        <h5>Crit Power Multiplier (dyad value): </h5>                                                     
+                        <div class="form-check">
+                            <input class="data-damage ml-4 form-check-input" type="checkbox" value="1.88" name="focus">
+                            <label class="ml-4 form-check-label">Focus +1.88</label>
+                        </div> 
+                        <div class="form-check">
+                            <input class="data-damage ml-4 form-check-input" type="checkbox" value="1.32" name="savage">
+                            <label class="ml-4 form-check-label">Savage +1.32</label>
+                        </div>  
+                        <div class="form-check">
+                            <input class="data-damage ml-4 form-check-input" type="checkbox" value="1.52" name="bitter">
+                            <label class="ml-4 form-check-label">Bitter/Spiteful +1.52</label>
+                        </div> 
+                        <div class="form-check">
+                            <input class="data-damage ml-4 form-check-input" type="checkbox" value="1.74" name="slaying">
+                            <label class="ml-4 form-check-label">Slaying +1.74</label>
+                        </div> 
+                        <div class="form-check">
+                            <input class="data-damage ml-4 form-check-input" type="checkbox" value="1.66" name="wrathful">
+                            <label class="ml-4 form-check-label">Wraithful +1.66</label>
+                        </div>   
+                    </form> 
+                </div>
+                <div class="col-sm-5 row justify-content-center" >
+                    <div class="row">                    
+                    </div>
+                    <div id="ajax-form-damage-generate">
+                            <p>YOU DON'T DAMAGE</p>  
+                    </div>                             
+                </div>
+            </div>   
+        </div> 
+
+    <div class="container mt-6">
         <div class="row mt-2">
             <div class="col border border-dark">
                 <img src="https://i.imgur.com/nUkRLs4.png" class ="img-fluid">

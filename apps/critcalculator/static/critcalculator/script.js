@@ -7,7 +7,13 @@ $(document).on("change", ".data",function(){
 $(document).on("keyup", ".data",function(){
     get_crit();
 })
-function get_class_skills(){    
+$(document).on("change", ".data-damage",function(){
+    get_damage();
+})
+$(document).on("keyup", ".data-damage",function(){
+    get_damage();
+})
+function get_class_skills(){ 
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
@@ -46,6 +52,30 @@ function get_crit(){
                 "<br>" +
                 "<h1><b class='text-success'>"+ serverResponse + "%</b></h1>"
                 )
+        }
+    }).done()              
+}
+
+function get_damage(){    
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token)
+            }
+        }               
+    });                             
+    $.ajax({
+        url: '/calculate_damage_process',
+        method: 'post',
+        data: $("#ajax-form-damage").serialize(),
+        success: function(serverResponse){
+            $('#ajax-form-damage-generate').html(
+                "<p>Your Damage change is: </p>"+
+                "<br>" +
+                "<br>" +
+                "<h1><b class='text-success'>"+ serverResponse + "%</b></h1>"
+                )
+
         }
     }).done()              
 }
